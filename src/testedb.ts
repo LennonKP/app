@@ -7,7 +7,7 @@ const prisma = new PrismaClient({
 });
 
 
-const insereUsuario = async ({name, email, password, cpf}) => {
+const insereUsuario = async ({ name, email, password, cpf }: { name: string, email: string, password: string, cpf: string }) => {
     const usuario = await prisma.usuario.create({
         data: {
             name,
@@ -24,16 +24,16 @@ const buscaUsuarios = async () => {
     console.log(usuarios);
 }
 
-const insereProduto = async (produto) => {
+const insereProduto = async (produto: any) => {
     const prod = await prisma.produto.create({
         data: produto
     });
     console.log(prod);
 }
 
-const detalharUsuarioComPedidos  = async (id) => {
+const detalharUsuarioComPedidos = async (id: number) => {
     const usuario = await prisma.usuario.findUnique({
-        where: {id},
+        where: { id },
         include: {
             Pedido: {
                 include: {
@@ -44,18 +44,18 @@ const detalharUsuarioComPedidos  = async (id) => {
         omit: {
             password: true,
             createdAt: true,
-            updatedAt: true 
+            updatedAt: true
         }
     });
     console.log(JSON.stringify(usuario, null, 2));
 }
 
-const criarPedido = async (idUsuario, idProdutos) => {
+const criarPedido = async (idUsuario: number, idProdutos: number[]) => {
     const pedido = await prisma.pedido.create({
         data: {
             usuarioId: idUsuario,
             produtos: {
-                connect: idProdutos.map(id => ({id}))
+                connect: idProdutos.map(id => ({ id }))
             },
             total: 0,   // carregar produtos para somar os preços,
             status: "PAGAMENTO_PENDENTE"
@@ -106,7 +106,7 @@ const main = async () => {
     // await criarPedido(1, [1, 2]);
     // await criarPedido(2, [2, 3]);
     // await criarPedido(3, [3]);
-    
+
     // await criarPedido(1, [3]);
     await detalharUsuarioComPedidos(1);
 };
