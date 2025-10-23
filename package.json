@@ -1,0 +1,26 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "npx prisma migrate dev",
+    "dev": "bun --watch src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/formidable": "^3.4.6",
+    "prisma": "5.9.1"
+  },
+  "dependencies": {
+    "@prisma/client": "5.9.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "formidable": "^3.5.4"
+  }
+}

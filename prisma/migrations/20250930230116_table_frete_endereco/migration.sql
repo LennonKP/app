@@ -1,0 +1,21 @@
+-- CreateTable
+CREATE TABLE "Frete" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "valor" REAL NOT NULL,
+    "enderecoId" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Frete_enderecoId_fkey" FOREIGN KEY ("enderecoId") REFERENCES "Endereco" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Endereco" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "rua" TEXT NOT NULL,
+    "numero" TEXT NOT NULL,
+    "cidade" TEXT NOT NULL,
+    "estado" TEXT NOT NULL,
+    "cep" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
