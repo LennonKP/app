@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "npx prisma migrate dev",
+    "migrate": "pnpx prisma migrate dev --schema=./src/infra/prisma/schema.prisma",
+    "generate": "pnpx prisma generate --schema=./src/infra/prisma/schema.prisma",
+    "studio": "pnpx prisma studio --schema=./src/infra/prisma/schema.prisma",
     "dev": "bun --watch src/app.ts"
   },
   "keywords": [],
@@ -18,9 +20,14 @@
     "prisma": "5.9.1"
   },
   "dependencies": {
-    "@prisma/client": "5.9.1",
+    "@prisma/client": "6.18.0",
+    "@types/bcrypt": "^6.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcrypt": "^6.0.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "formidable": "^3.5.4"
+    "formidable": "^3.5.4",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^4.1.12"
   }
 }
