@@ -7,3 +7,9 @@
     <title><%= title %></title>
 </head>
 <body class="min-h-screen bg-gray-100">
+<% if (locals.error) { %>
+    <div class="error-message">
+        <p><%= error %></p>
+    </div>
+<% } %>
+<main>

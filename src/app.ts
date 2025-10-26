@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import formidable from 'formidable';
 
 import PrismaUserRepository from './infra/prisma/repositories/PrismaUserRepository';
@@ -25,7 +25,7 @@ const hashProvider = new BcryptHashProvider()
 const jwtProvider = new JsonWebTokenProvider()
 const authService = new AuthService(userRepository, hashProvider, jwtProvider)
 
-const authRequired = async (req: any, res: any, next: any) => {
+const authRequired = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.cookies.token;
         if (!token) return res.redirect('/login');
@@ -77,35 +77,27 @@ app.get('/publish', (req, res) => {
     res.render('publish')
 })
 
-app.post('/publish', (req, res, next) => {
+app.post('/publish', async (req, res, next) => {
     // prod/users/1235314123/fotos
-    const form = formidable({
-        uploadDir: "../app/public/uploads",
-        // uploadDir: `../app/uploads/${req.user.id}/`,
-        createDirsFromUploads: true,
-        keepExtensions: true
-    });
+    // const form = formidable({
+    //     uploadDir: "../app/public/uploads",
+    //     // uploadDir: `../app/uploads/${req.user.id}/`,
+    //     createDirsFromUploads: true,
+    //     keepExtensions: true
+    // });
+    const form = formidable({});
+    const [fields, files] = await form.parse(req);
 
-    form.parse(req, (err, fields, files) => {
-        if (err) {
-            next(err);
-            return;
-        }
+    // ...process fields and files
+    console.log('Fields:', fields);
+    console.log('Files:', files);
+    // use postsService to save post
 
-        if (!files.imagem) {
-            next(err);
-            return;
-        }
-
-        // s3Service.upload(file);
-        images.push(files.imagem[0].newFilename);
-        res.json({ fields, files });
-    });
-
+    // return EJS view
 })
 
 app.use((_req, res) => {
     res.status(404).send("NOT FOUND");
 })
 
-app.listen(3000, _  => console.log("ESCUTANDO NA PORTA 3000"));
+app.listen(3000, _ => console.log("ESCUTANDO NA PORTA 3000"));
